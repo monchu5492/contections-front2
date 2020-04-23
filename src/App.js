@@ -63,6 +63,8 @@ export default class App extends React.Component {
       });
   }
 
+//this is just anote from the amazon fire 
+
   getAllUsers() {
     console.log("getting all users");
     fetch(userURl, {
