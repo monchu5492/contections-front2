@@ -11,38 +11,40 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 const userURl = "http://localhost:3000/users";
 const eventsURL = "http://localhost:3000/events";
+let INITIAL_STATE = {
+  users: [],
+  allEvents: [],
+  isLoggedIn: false,
+  newSignup: false,
+  owned_events: [],
+  user: null,
+  auth: {
+    user: {},
+  },
+};
 
 export default class App extends React.Component {
-  state = {
-    users: [],
-    allEvents: [],
-    isLoggedIn: false,
-    newSignup: false,
-    owned_events: [],
-    user: null,
-    auth: {
-      user: {}
-    }
-  };
+  state = INITIAL_STATE;
 
   componentDidMount() {
+    console.log("what up");
     const token = localStorage.getItem("token");
     if (token) {
       // console.log('there is a token');
       // make a request to the backend and find our user
-      api.auth.getCurrentUser().then(user => {
+      this.getAllUsers();
+      this.getAllEvents();
+      api.auth.getCurrentUser().then((user) => {
         if (!user.error) {
           console.log(user);
           const updatedState = { ...this.state.auth, user: user };
           this.setState({ ...this.state, auth: updatedState });
         }
-        this.getAllUsers();
-        this.getAllEvents();
       });
     }
   }
@@ -50,13 +52,13 @@ export default class App extends React.Component {
   getAllEvents() {
     console.log("getting events");
     fetch(eventsURL, {
-      headers: { Authorization: localStorage.getItem("token") }
+      headers: { Authorization: localStorage.getItem("token") },
     })
-      .then(res => res.json())
-      .then(events => {
+      .then((res) => res.json())
+      .then((events) => {
         console.log(events);
         this.setState({
-          allEvents: events
+          allEvents: events,
         });
       });
   }
@@ -64,17 +66,17 @@ export default class App extends React.Component {
   getAllUsers() {
     console.log("getting all users");
     fetch(userURl, {
-      headers: { Authorization: localStorage.getItem("token") }
+      headers: { Authorization: localStorage.getItem("token") },
     })
-      .then(res => res.json())
-      .then(users =>
+      .then((res) => res.json())
+      .then((users) =>
         this.setState({
-          users: users
+          users: users,
         })
       );
   }
 
-  // onLogInUser = username => {
+  // onLogInUser = (username) => {
   //   console.log(username);
   //   // this.getAllOwners()
   //   // let filteredUser = this.state.users.filter(
@@ -93,7 +95,7 @@ export default class App extends React.Component {
   //   // make a request to the backend and find our user
   //   const token = localStorage.getItem("token");
   //   if (token) {
-  //     api.auth.getCurrentUser().then(user => {
+  //     api.auth.getCurrentUser().then((user) => {
   //       if (!user.error) {
   //         console.log(user);
   //         const updatedState = { ...this.state.auth, user: user };
@@ -103,7 +105,7 @@ export default class App extends React.Component {
   //           isLoggedIn: true,
   //           user: user,
   //           newSignup: false,
-  //           owned_events: user.owned_events
+  //           owned_events: user.owned_events,
   //         });
   //       } else {
   //         alert("not logged in");
@@ -115,7 +117,7 @@ export default class App extends React.Component {
   //   // this.setLocalStorage(ownersfiltered[0])
   // };
 
-  addUser = user => {
+  addUser = (user) => {
     // this.setState(
     //   prevState => {
     //     return {
@@ -128,17 +130,17 @@ export default class App extends React.Component {
   };
 
   //Sign Up Feature: POSTING User to Database
-  postUser = user => {
+  postUser = (user) => {
     return fetch(userURl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       },
-      body: JSON.stringify({ user: user })
+      body: JSON.stringify({ user: user }),
     })
-      .then(res => res.json())
-      .then(data => console.log(data));
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   // logOut = () => {
@@ -154,7 +156,7 @@ export default class App extends React.Component {
 
   updateEvent = (thisevent, cur_ev_from_props) => {
     let theseEvents = this.state.allEvents.filter(
-      event => event.id !== cur_ev_from_props.id
+      (event) => event.id !== cur_ev_from_props.id
     );
     let newEvent = { ...thisevent, id: cur_ev_from_props.id };
 
@@ -169,35 +171,35 @@ export default class App extends React.Component {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: localStorage.getItem("token")
+        Authorization: localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        event: thisevent
-      })
+        event: thisevent,
+      }),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => this.updateUsersEvents(nonMutatedEvents()));
     // this.unMutatedEvents(nonMutatedEvents())
   };
 
   // takes in an event {object} from removebuttonmodal
-  deleteEvent = deletedEvent => {
+  deleteEvent = (deletedEvent) => {
     // console.log(deletedEvent);
     console.log("delete event function hit");
     console.log(deletedEvent);
     console.log(this.state.allEvents);
     let nonDeletedEvents = this.state.allEvents.filter(
-      event => event.id !== deletedEvent.id
+      (event) => event.id !== deletedEvent.id
     );
     console.log(nonDeletedEvents);
     fetch(`http://localhost:3000/events/${deletedEvent.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token")
-      }
+        Authorization: localStorage.getItem("token"),
+      },
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => {
         this.updateUsersEvents(nonDeletedEvents);
         console.log(nonDeletedEvents);
@@ -205,7 +207,7 @@ export default class App extends React.Component {
       });
   };
 
-  postEvent = event => {
+  postEvent = (event) => {
     console.log(event);
 
     // console.log(newUsersEvents());
@@ -214,52 +216,57 @@ export default class App extends React.Component {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: localStorage.getItem("token")
+        Authorization: localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        event: { ...event, user_id: this.state.auth.user.id }
-      })
+        event: { ...event, user_id: this.state.auth.user.id },
+      }),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         let tmp = this.state.allEvents.slice();
         tmp.push(data);
         this.updateUsersEvents(tmp);
       });
   };
 
-  joinEvent = thisevent => {
+  joinEvent = (thisevent) => {
     return fetch("http://localhost:3000/join_events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: localStorage.getItem("token")
+        Authorization: localStorage.getItem("token"),
       },
       body: JSON.stringify({
         user_id: this.state.auth.user.id,
-        event_id: thisevent.id
-      })
+        event_id: thisevent.id,
+      }),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
         thisevent.join_events.push({ id: data.id });
-        let tmp = this.state.allEvents.slice();
+        let tmp = this.state.allEvents.slice().filter((event) => {
+          return event.id !== data.event.id;
+        });
+        console.log(tmp);
+        console.log(thisevent);
         tmp.push(thisevent);
         this.updateUsersEvents(tmp);
       });
   };
   // console.log(data, thisevent.join_events)
   // this.this.setState({ ...this.state })
-  updateUsersEvents = newUsersEvents => {
+  updateUsersEvents = (newUsersEvents) => {
     console.log("new users events", newUsersEvents);
     this.setState({
       ...this.state,
-      allEvents: newUsersEvents
+      allEvents: newUsersEvents,
     });
   };
 
-  login = data => {
+  login = (data) => {
     // api.auth.getCurrentUser().then(user => console.log(user));
     // const token = localStorage.getItem("token");
     // const updatedState = {
@@ -286,15 +293,17 @@ export default class App extends React.Component {
     localStorage.setItem("token", data.jwt);
     this.setState({
       auth: { user: data.user },
-      owned_events: data.user.owned_events
+      owned_events: data.user.owned_events,
+      isLoggedIn: true,
     });
+    this.getAllEvents();
     // this.setState({ ...this.state, auth: updatedState });
   };
   // };
 
   logout = () => {
     localStorage.clear();
-    this.setState({ auth: { user: {} } });
+    this.setState((this.state = INITIAL_STATE));
   };
 
   render() {
@@ -302,56 +311,56 @@ export default class App extends React.Component {
       <div>
         <Router>
           <Switch>
-            {!this.state.auth.user ? (
-              ((
-                <Route
-                  path="/"
-                  exact
-                  render={() => (
-                    <HomepageLayout
-                      users={this.state.users}
-                      isLoggedIn={this.state.isLoggedIn}
-                    />
-                  )}
-                />
-              ),
-              (
-                <Route
-                  path="/profile"
-                  render={props => (
-                    <HomepageLayout
-                      users={this.state.users}
-                      isLoggedIn={this.state.isLoggedIn}
-                    />
-                  )}
-                />
-              ))
-            ) : (
-              <Route
-                path="/profile"
-                render={props => (
-                  <ProfileContainer
-                    {...props}
-                    user={this.state.auth.user}
-                    users={this.state.users}
-                    owned_events={this.state.owned_events}
-                    localUser={this.localUser}
-                    logOut={this.logout}
-                    postEvent={this.postEvent}
-                    updateUsersEvents={this.updateUsersEvents}
-                    updateEvent={this.updateEvent}
-                    deleteEvent={this.deleteEvent}
-                    currentUserEvents={this.state.currentUserEvents}
-                    joinEvent={this.joinEvent}
-                    allEvents={this.state.allEvents}
+            {!this.state.auth.user
+              ? ((
+                  <Route
+                    path="/"
+                    exact
+                    render={() => (
+                      <HomepageLayout
+                        users={this.state.users}
+                        isLoggedIn={this.state.isLoggedIn}
+                      />
+                    )}
                   />
-                )}
-              />
-            )}
+                ),
+                (
+                  <Route
+                    path="/profile"
+                    render={(props) => (
+                      <HomepageLayout
+                        users={this.state.users}
+                        isLoggedIn={this.state.isLoggedIn}
+                      />
+                    )}
+                  />
+                ))
+              : null
+            // <Route
+            //   path="/profile"
+            //   render={(props) => (
+            //     <ProfileContainer
+            //       {...props}
+            //       user={this.state.auth.user}
+            //       users={this.state.users}
+            //       owned_events={this.state.owned_events}
+            //       localUser={this.localUser}
+            //       logOut={this.logout}
+            //       postEvent={this.postEvent}
+            //       updateUsersEvents={this.updateUsersEvents}
+            //       updateEvent={this.updateEvent}
+            //       deleteEvent={this.deleteEvent}
+            //       currentUserEvents={this.state.currentUserEvents}
+            //       joinEvent={this.joinEvent}
+            //       allEvents={this.state.allEvents}
+            //     />
+            //   )}
+            // />
+            }
             <Route
               path="/login"
               exact
-              render={props => (
+              render={(props) => (
                 <LoginForm
                   {...props}
                   onLogInUser={this.login}
@@ -362,7 +371,7 @@ export default class App extends React.Component {
             <Route
               path="/signup"
               exact
-              render={props => (
+              render={(props) => (
                 <SignupForm
                   {...props}
                   addUser={this.addUser}
@@ -379,7 +388,7 @@ export default class App extends React.Component {
             <Route
               path="/profile"
               exact
-              render={props => (
+              render={(props) => (
                 <ProfileContainer
                   {...props}
                   user={this.state.auth.user}
