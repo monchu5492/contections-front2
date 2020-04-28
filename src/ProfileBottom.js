@@ -254,7 +254,14 @@ export default class MenuExampleTabularOnTop extends Component {
             </Menu.Item> */}
           </Menu.Menu>
         </Menu>
-        <Segment attached="bottom" textAlign="center">
+        <Segment
+          attached="bottom"
+          textAlign="center"
+          style={{
+            minHeight: `calc(100vh - 157px)`,
+            backgroundImage: `linear-gradient(rgb(138, 248, 138), rgb(108, 163, 253))`,
+          }}
+        >
           {this.allEventMenuTab()}
           {/* {this.eventGridFuntion()} */}
           {this.bioMenuTab()}

@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   links: "",
   description: "",
   address: "",
-  user: null
+  user: null,
   //    owner_id: ""
 };
 export default class CreateEventForm extends React.Component {
@@ -21,10 +21,10 @@ export default class CreateEventForm extends React.Component {
   close = () => this.setState({ open: false });
   //-------------------------------------------
   state = { ...this.props.currentEvent };
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleFormSubmit = e => {
+  handleFormSubmit = (e) => {
     // debugger;
     e.preventDefault();
     this.close();
@@ -41,7 +41,7 @@ export default class CreateEventForm extends React.Component {
           color="twitter"
           inverted
         >
-          Edit an Event
+          Edit this Event
         </Button>
         <Modal
           open={open}
@@ -51,7 +51,15 @@ export default class CreateEventForm extends React.Component {
         >
           <Modal.Header>Edit your Event</Modal.Header>
           <Modal.Content>
-            <p>Please provide the following information about your event.</p>
+            <p
+              style={{
+                marginBottom: "0",
+                textAlign: "center",
+                textTransform: "capitalize",
+              }}
+            >
+              Please provide the following information about your event.
+            </p>
           </Modal.Content>
           <form className="ui form" onSubmit={this.handleFormSubmit}>
             <div className="field">

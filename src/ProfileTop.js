@@ -7,7 +7,7 @@ import {
   Header,
   Icon,
   Form,
-  Divider
+  Divider,
 } from "semantic-ui-react";
 import CreateEventForm from "./CreateEventForm";
 import EditEventForm from "./EditEventform";
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   links: "",
   description: "",
   address: "",
-  modalOpen: false
+  modalOpen: false,
 };
 
 export default class MenuExampleSecondaryPointing extends Component {
@@ -27,18 +27,18 @@ export default class MenuExampleSecondaryPointing extends Component {
 
   handleOpen = () => this.setState({ ...this.state, modalOpen: true });
 
-  handleClose = e => {
+  handleClose = (e) => {
     this.setState({
       ...this.state,
-      modalOpen: false
+      modalOpen: false,
     });
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleFormSubmit = e => {
+  handleFormSubmit = (e) => {
     e.preventDefault();
     this.props.addUser(this.state);
     this.setState(INITIAL_STATE);
@@ -49,7 +49,7 @@ export default class MenuExampleSecondaryPointing extends Component {
     // const { activeItem } = this.state;
     return (
       <div>
-        <Segment>
+        <Segment style={{ marginBottom: "0", backgroundColor: "#1b1c1d" }}>
           <Image
             src={this.props.user.profile_pic}
             alt="none"
@@ -62,7 +62,14 @@ export default class MenuExampleSecondaryPointing extends Component {
             user={this.props.user}
             postEvent={this.props.postEvent}
           />
-          <h2 style={{ width: "max-content", margin: "auto" }}>
+          <h2
+            style={{
+              width: "max-content",
+              margin: "auto",
+              color: "aliceblue",
+              textTransform: "capitalize",
+            }}
+          >
             {this.props.user ? this.props.user.name : "currently no user"}
           </h2>
         </Segment>

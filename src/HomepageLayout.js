@@ -92,7 +92,11 @@ class DesktopContainer extends Component {
             textAlign="center"
             style={{
               minHeight: 700,
-              padding: "1em 0em",
+              backgroundImage: `url(
+                https://cdn.pixabay.com/photo/2018/04/18/13/37/blue-3330475_960_720.png
+              )`,
+              backgroundSize: "cover",
+              paddingTop: "0px",
             }}
             vertical
           >
@@ -188,7 +192,11 @@ class MobileContainer extends Component {
             textAlign="center"
             style={{
               minHeight: 350,
-              padding: "1em 0em",
+              backgroundImage: `url(
+                https://cdn.pixabay.com/photo/2018/04/18/13/37/blue-3330475_960_720.png
+              )`,
+              backgroundSize: "cover",
+              paddingTop: "0px",
             }}
             vertical
           >

@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Divider, Form } from "semantic-ui-react";
+import { Button, Divider, Form, Label } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
+import AutoAddress from "./AutoAddress";
 
 // const sizes = ['mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']
 
@@ -9,20 +10,28 @@ const INITIAL_STATE = {
   name: "",
   bio: "",
   address: "",
-  password: ""
+  password: "",
 };
 
 class FormExampleSize extends React.Component {
   state = INITIAL_STATE;
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleFormSubmit = e => {
+  handleFormSubmit = (e) => {
     e.preventDefault();
     this.props.addUser(this.state);
     this.props.history.push("/login");
+  };
+
+  setUserLatLng = (latLng) => {
+    this.setState({
+      address: `${latLng.lat}, ${latLng.lng}`,
+    });
+    // console.log(this.state);
+    console.log(latLng);
   };
 
   render() {
@@ -65,14 +74,16 @@ class FormExampleSize extends React.Component {
             onChange={this.handleChange}
             placeholder="Profile Picture"
           />
-          <Form.Field
+          <label>Address</label>
+          <AutoAddress setUserLatLng={this.setUserLatLng} />
+          {/* <Form.Field
             label="Address"
             control="input"
             name="address"
             value={this.state.address}
             onChange={this.handleChange}
             placeholder="Address"
-          />
+          /> */}
           <Form.Field
             label="Password"
             control="input"

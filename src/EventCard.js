@@ -24,7 +24,14 @@ export default class CardExampleGroups extends React.Component {
     console.log(this.props.user.id);
     // const eventMaker =
     return (
-      <Card style={{ marginRight: "10%" }}>
+      <Card
+        style={{
+          marginRight: "10%",
+          display: "inline-block",
+          margin: "0.5em",
+          height: "340px",
+        }}
+      >
         {console.log(this.props.currentEvent, "currentEvent card props")}
         <Card.Content
           textAlign="center"
@@ -34,21 +41,38 @@ export default class CardExampleGroups extends React.Component {
             height: "-webkit-fill-available",
           }}
         >
-          <Card.Header>
+          <Card.Header style={{ color: "aquamarine" }}>
             Event Created By {this.props.currentEvent.user.user_name}
           </Card.Header>
-          <Card.Meta style={{ marginTop: "10px" }}>
+          <Card.Meta style={{ marginTop: "10px", color: "cyan" }}>
             {this.props.currentEvent.name} project
           </Card.Meta>
-          <Card.Description>
+          <Card.Description
+            style={{
+              color: "deepskyblue",
+              transition: "color 0.1s ease",
+              transitionProperty: "color",
+              transitionDuration: "0.1s",
+              transitionTimingFunction: "ease",
+              transitionDelay: "0s",
+            }}
+          >
             {/* <Link exact to={this.props.currentEvent.links}>
               Link
             </Link> */}
             <a href={this.props.currentEvent.links}>event link</a>
-            <p>{this.props.currentEvent.join_events.length}</p>
+            <p
+              style={{
+                marginBottom: "0",
+                width: "max-content",
+                float: "right",
+              }}
+            >
+              {this.props.currentEvent.join_events.length}
+            </p>
           </Card.Description>
         </Card.Content>
-        <Card.Content extra>
+        <Card.Content extra style={{ backgroundColor: "paleturquoise" }}>
           <div className="ui two buttons">
             {this.props.currentEvent.user.id !== this.props.user.id ? (
               <JoinModalButton
@@ -58,13 +82,15 @@ export default class CardExampleGroups extends React.Component {
                 eventChange={this.props.eventChange}
               />
             ) : (
-              <EditEventForm
-                style={{ position: "left" }}
-                user={this.props.user}
-                updateEvent={this.props.updateEvent}
-                deleteEvent={this.props.deleteEvent}
-                currentEvent={this.props.currentEvent}
-              />
+              <div>
+                <EditEventForm
+                  // style={{ position: "left" }}
+                  user={this.props.user}
+                  updateEvent={this.props.updateEvent}
+                  deleteEvent={this.props.deleteEvent}
+                  currentEvent={this.props.currentEvent}
+                />
+              </div>
             )}
           </div>
         </Card.Content>
