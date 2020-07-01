@@ -17,22 +17,22 @@ export default class FormExampleSize extends React.Component {
       error: false,
       fields: {
         user_name: "",
-        password: ""
-      }
+        password: "",
+      },
     };
   }
   // state = INITIAL_STATE;
 
-  handleOnChange = e => {
+  handleOnChange = (e) => {
     const newFields = { ...this.state.fields, [e.target.name]: e.target.value };
     this.setState({
-      fields: newFields
+      fields: newFields,
     });
   };
 
-  handleOnSubmit = e => {
+  handleOnSubmit = (e) => {
     e.preventDefault();
-    api.auth.login(this.state.fields).then(res => {
+    api.auth.login(this.state.fields).then((res) => {
       console.log(res);
       if (!res.error) {
         // const updatedState = { ...this.state.auth, user: res };
@@ -55,7 +55,12 @@ export default class FormExampleSize extends React.Component {
     return (
       <div>
         {this.state.error ? <h1>please try again...</h1> : null}
-        <Form size={"small"} key={"small"} onSubmit={this.handleOnSubmit}>
+        <Form
+          size={"small"}
+          key={"small"}
+          onSubmit={this.handleOnSubmit}
+          style={{ width: "500px", marginTop: "5%", marginLeft: "200px" }}
+        >
           <Form.Group widths="equal">
             <Form.Field
               label="User Name"
@@ -74,8 +79,10 @@ export default class FormExampleSize extends React.Component {
             onChange={this.handleOnChange}
             placeholder="Password"
           />
-          <Button type="submit">Submit</Button>
-          <Button id="homeButton" as={Link} to={"/"}>
+          <Button type="submit" style={{ width: "243px", marginRight: "10px" }}>
+            Submit
+          </Button>
+          <Button id="homeButton" as={Link} to={"/"} style={{ width: "243px" }}>
             Home
           </Button>
           <Divider hidden />

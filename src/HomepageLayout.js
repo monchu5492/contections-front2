@@ -70,6 +70,7 @@ HomepageHeading.propTypes = {
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
+
 class DesktopContainer extends Component {
   state = {};
 
@@ -77,9 +78,21 @@ class DesktopContainer extends Component {
   showFixedMenu = () => this.setState({ fixed: true });
 
   render() {
+    // console.log(this.props.isLoggedIn);
     const { children } = this.props;
     const { fixed } = this.state;
+    const isLoggedIn = this.props.isLoggedIn;
+    let profile;
 
+    if (isLoggedIn) {
+      profile = (
+        <Menu.Item as={Link} to={"/profile"}>
+          Profile
+        </Menu.Item>
+      );
+    } else {
+      profile = <Menu.Item as={Link}>Profile</Menu.Item>;
+    }
     return (
       <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
@@ -109,9 +122,7 @@ class DesktopContainer extends Component {
             >
               <Container>
                 <Menu.Item as="a">Home</Menu.Item>
-                <Menu.Item as={Link} to={"/profile"}>
-                  Profile
-                </Menu.Item>
+                {profile}
                 <Menu.Item as="a">Company</Menu.Item>
                 <Menu.Item position="right">
                   <Link to="/login">
@@ -156,7 +167,18 @@ class MobileContainer extends Component {
   render() {
     const { children } = this.props;
     const { sidebarOpened } = this.state;
+    const isLoggedIn = this.props.isLoggedIn;
+    let profile;
 
+    if (isLoggedIn) {
+      profile = (
+        <Menu.Item as={Link} to={"/profile"}>
+          Profile
+        </Menu.Item>
+      );
+    } else {
+      profile = <Menu.Item as={Link}>Profile</Menu.Item>;
+    }
     return (
       <Responsive
         as={Sidebar.Pushable}
@@ -175,10 +197,12 @@ class MobileContainer extends Component {
             Home
           </Menu.Item>
           <Menu.Item>Company</Menu.Item>
-          <Menu.Item as={Link} to={"/profile"}>
+          {/* <Menu.Item as={Link} to={"/profile"}>
             Profile
-          </Menu.Item>
-          <Menu.Item as="a">Profile</Menu.Item>
+          </Menu.Item> */}
+          {/* {console.log(this.isLoggedIn)} */}
+          {profile}
+          {/* <Menu.Item as="a">Profile</Menu.Item> */}
           <Menu.Item as={Link} to="/login">
             Log in
           </Menu.Item>

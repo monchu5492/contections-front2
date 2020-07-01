@@ -1,4 +1,5 @@
 import React from "react";
+import GMaps from "./GMap";
 import { Button, Modal, Image, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 // Form, Header, Image,
@@ -45,7 +46,9 @@ export default class JoinModalButton extends React.Component {
               {console.log(this.props.currentEvent)}
               <Header>{this.props.currentEvent.name}</Header>
               <p>{this.props.currentEvent.address}</p>
-              <Link>{this.props.currentEvent.links}</Link>
+              <a href={this.props.currentEvent.links}>
+                {this.props.currentEvent.links}
+              </a>
               <p>{this.props.currentEvent.description}</p>
               <p>{this.props.currentEvent.user.user_name}</p>
             </Modal.Description>

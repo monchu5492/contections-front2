@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal } from "semantic-ui-react";
+import AutoAddress from "./AutoAddress";
 // Form, Header, Image,
 const INITIAL_STATE = {
   name: "",
@@ -7,7 +8,7 @@ const INITIAL_STATE = {
   links: "",
   description: "",
   address: "",
-  user: null
+  user: null,
   //    owner_id: ""
 };
 export default class CreateEventForm extends React.Component {
@@ -19,10 +20,10 @@ export default class CreateEventForm extends React.Component {
   close = () => this.setState({ open: false });
   //-------------------------------------------
   state = INITIAL_STATE;
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleFormSubmit = e => {
+  handleFormSubmit = (e) => {
     // debugger;
     e.preventDefault();
     this.close();
@@ -47,12 +48,17 @@ export default class CreateEventForm extends React.Component {
           closeOnEscape={closeOnEscape}
           closeOnDimmerClick={closeOnDimmerClick}
           onClose={this.close}
+          style={{ width: "70%", textAlign: "center" }}
         >
           <Modal.Header>Create an Event</Modal.Header>
           <Modal.Content>
             <p>Please provide the following information about your event.</p>
           </Modal.Content>
-          <form className="ui form" onSubmit={this.handleFormSubmit}>
+          <form
+            className="ui form"
+            onSubmit={this.handleFormSubmit}
+            style={{ width: "70%", marginLeft: "93px" }}
+          >
             <div className="field">
               <label>Name</label>
               <input
@@ -95,13 +101,14 @@ export default class CreateEventForm extends React.Component {
             </div>
             <div className="field">
               <label>address</label>
-              <input
+              <AutoAddress />
+              {/* <input
                 type="text"
                 name="address"
                 value={this.state.address}
                 onChange={this.handleChange}
                 placeholder="Address"
-              />
+              /> */}
             </div>
             {/* <button type="submit" className="ui button">Submit</button> */}
           </form>

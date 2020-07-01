@@ -16,14 +16,37 @@ class AutoAddress extends React.Component {
   };
 
   handleSelect = (address) => {
+    console.log(address);
     this.setState({ address });
-    geocodeByAddress(address)
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) =>
-        console.log("Success", this.props.setUserLatLng(latLng))
+    geocodeByAddress(address).then((results) =>
+      results.map(
+        (result) => (
+          getLatLng(result),
+          console.log(
+            result.address_components.find((addComp) => {
+              let these = addComp.types[0] == "postal_code";
+              return these["long_name"];
+            })
+          )
+        )
       )
-      .catch((error) => console.error("Error", error));
+    );
+    // .then((latLng) =>
+    //   console.log("Success", this.props.setUserLatLng(latLng))
+    // )
+    // .catch((error) => console.error("Error", error));
   };
+
+  // handleSelect = (address) => {
+  //   console.log(address);
+  //   this.setState({ address });
+  //   geocodeByAddress(address)
+  //     .then((results) => getLatLng(results[0]))
+  //     .then((latLng) =>
+  //       console.log("Success", this.props.setUserLatLng(latLng))
+  //     )
+  //     .catch((error) => console.error("Error", error));
+  // };
 
   render() {
     return (

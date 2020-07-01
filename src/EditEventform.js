@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal } from "semantic-ui-react";
 import RemoveEventModal from "./RemoveEventModal";
+import AutoAddress from "./AutoAddress";
 // Form, Header, Image,
 const INITIAL_STATE = {
   id: null,
@@ -40,6 +41,7 @@ export default class CreateEventForm extends React.Component {
           onClick={this.closeConfigShow(false, true)}
           color="twitter"
           inverted
+          style={{ width: "100%" }}
         >
           Edit this Event
         </Button>
@@ -48,6 +50,7 @@ export default class CreateEventForm extends React.Component {
           closeOnEscape={closeOnEscape}
           closeOnDimmerClick={closeOnDimmerClick}
           onClose={this.close}
+          style={{ width: "70%", textAlign: "center" }}
         >
           <Modal.Header>Edit your Event</Modal.Header>
           <Modal.Content>
@@ -61,7 +64,11 @@ export default class CreateEventForm extends React.Component {
               Please provide the following information about your event.
             </p>
           </Modal.Content>
-          <form className="ui form" onSubmit={this.handleFormSubmit}>
+          <form
+            className="ui form"
+            onSubmit={this.handleFormSubmit}
+            style={{ width: "70%", marginLeft: "93px" }}
+          >
             <div className="field">
               <label>Name</label>
               <input
@@ -104,13 +111,7 @@ export default class CreateEventForm extends React.Component {
             </div>
             <div className="field">
               <label>address</label>
-              <input
-                type="text"
-                name="address"
-                value={this.state.address}
-                onChange={this.handleChange}
-                placeholder={this.props.currentEvent.address}
-              />
+              <AutoAddress />
             </div>
             {/* <button type="submit" className="ui button">Submit</button> */}
           </form>

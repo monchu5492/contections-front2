@@ -1,10 +1,8 @@
 import React, { Component } from "react";
+import SearchBar from "./SearchBar";
 import { Input, Menu, Segment, Card, Grid } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import EventCard from "./EventCard";
-import CreateEventForm from "./CreateEventForm";
-import EventContainer from "./CreateEventForm";
-import HomepageLayout from "./HomepageLayout";
 
 export default class MenuExampleTabularOnTop extends Component {
   state = {
@@ -240,6 +238,7 @@ export default class MenuExampleTabularOnTop extends Component {
           />
           <Menu.Item as={Link} to="/" name="Home" />
           <Menu.Menu position="right">
+            <SearchBar />
             <Menu.Item
               name="Logout"
               active={activeItem === "Logout"}

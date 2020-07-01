@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Image, Modal } from "semantic-ui-react";
+import { Button, Card, Image, Modal, Popup } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import EditEventForm from "./EditEventform";
 import JoinModalButton from "./JoinModalButton";
@@ -23,6 +23,7 @@ export default class CardExampleGroups extends React.Component {
     // console.log(eventMakerId);
     console.log(this.props.user.id);
     // const eventMaker =
+    console.log(this.props.currentEvent.join_events);
     return (
       <Card
         style={{
@@ -57,10 +58,7 @@ export default class CardExampleGroups extends React.Component {
               transitionDelay: "0s",
             }}
           >
-            {/* <Link exact to={this.props.currentEvent.links}>
-              Link
-            </Link> */}
-            <a href={this.props.currentEvent.links}>event link</a>
+            {/* want to put pop up on this lement to display joined users */}
             <p
               style={{
                 marginBottom: "0",

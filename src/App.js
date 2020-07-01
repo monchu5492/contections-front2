@@ -63,7 +63,7 @@ export default class App extends React.Component {
       });
   }
 
-//this is just anote from the amazon fire 
+  //this is just anote from the amazon fire
 
   getAllUsers() {
     console.log("getting all users");
@@ -309,6 +309,7 @@ export default class App extends React.Component {
   };
 
   render() {
+    console.log(this.state.isLoggedIn);
     return (
       <div>
         <Router>
@@ -322,6 +323,7 @@ export default class App extends React.Component {
                       <HomepageLayout
                         users={this.state.users}
                         isLoggedIn={this.state.isLoggedIn}
+                        // userAuthAdd={this.state.auth.user}
                       />
                     )}
                   />
